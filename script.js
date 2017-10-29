@@ -3,21 +3,21 @@ function init() {
     var diagram = new go.Diagram("myDiagramDiv2");
 
     function makePoint(name, spot) {
-        return $(go.Shape, "Rectangle",
+        return $(go.Shape,
             {
                 fill: 'black',
-                fromLinkable: true,
                 desiredSize: new go.Size(8, 8),
                 alignment: spot,
                 margin: -1,
                 alignmentFocus: spot,
                 portId: name,
+                toMaxLinks: 1,
                 cursor: "pointer"
             },
-            new go.Binding("fromLinkable", "from"),
-            new go.Binding("toMaxLinks", "toMaxLinks"),
-            new go.Binding("fromMaxLinks", "fromMaxLinks"),
-            new go.Binding("toLinkable", "to")
+            new go.Binding("fromLinkable", "fromLinkable"),
+            new go.Binding("toLinkable", "toLinkable")
+           // new go.Binding("toMaxLinks", "maxLinksTo"),
+          //  new go.Binding("fromMaxLinks", "maxLinksFrom")
         )
     }
 
@@ -51,16 +51,29 @@ function init() {
             )
         );
 
+    function sameColor(fromnode, fromport, tonode, toport) {
+        if(!diagram.model.linkDataArray.length){
+            return true;
+        }else {
+            for (var j in diagram.model.linkDataArray) {
+                if(diagram.model.linkDataArray[j].to===tonode.data.key){
+                    return false;
+                }
+            }
+            return true;
+        }
+    }
+
+    diagram.toolManager.linkingTool.linkValidation = sameColor;
+
     diagram.initialContentAlignment = go.Spot.Center;
     diagram.model =
         $(go.GraphLinksModel,
             {
                 linkFromPortIdProperty: "fromPort",
                 linkToPortIdProperty: "toPort",
-                nodeDataArray: [   ],
-                linkDataArray: [
-                    // no predeclared links
-                ]
+                nodeDataArray: [],
+                linkDataArray: []
             });
 
     diagram.linkTemplate =
@@ -74,11 +87,11 @@ function init() {
         );
 
     addTerminal = function () {
-        var newnode = {key: "Terminal", loc: "250 150", from: true, toMaxLinks: 1, img: 'img/terminal.png'};
+        var newnode = {key: "Terminal", loc: "250 150", fromLinkable: true, toLinkable: false, maxLinksFrom:1, img: 'img/terminal.png'};
         diagram.model.addNodeData(newnode);
     };
     addElevator = function () {
-        var newnode =  {key: "Elevator", loc: "350 350", to: true, fromMaxLinks: 1, img: 'img/elevator.png'}
+        var newnode =  {key: "Elevator", loc: "350 350", toLinkable: true, maxLinksTo:1, fromLinkable: false,img: 'img/elevator.png'};
         diagram.model.addNodeData(newnode);
     };
 }
