@@ -6,19 +6,32 @@
     <title>Draggable Link</title>
     <meta name="description" content="Drag a link to reconnect it. Nodes have custom Adornments for selection, resizing, and reshaping." />
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
     <script src="./release/go.js"></script>
 
     <script src="script.js"></script>
 </head>
 <body onload="init()">
-<div id="sample">
-    <span style="display: inline-block; vertical-align: top; width:60%">
-        <div id="myDiagramDiv2" style="border: solid 1px black; height: 620px"></div>
-    </span>
-        <span style="display: inline-block; vertical-align: top; width:20%">
-        <input type="button" onclick="addTerminal()" value="addTerminal">
-        <input type="button" onclick="addElevator()" value="addElevator">
-    </span>
-</div>
+    <div id="sample" class="jumbotron row" style="background-color: #ffffff">
+        <div  class="col-md-9" >
+            <div id="myDiagramDiv2" style="border: solid 1px black; height: 620px"></div>
+        </div>
+        <div class="col-md-3">
+            <input class="btn btn-info" type="button" onclick="addTerminal()" value="Add Terminal">
+            <input class="btn btn-info" type="button" onclick="addElevator()" value="Add Elevator">
+            </br>
+            </br>
+            <div>
+                <p>
+                    To delete an item or link, select an item or links and press the "delete" key
+                </p>
+                <p>
+                    To drag more than one item, select items with the mouse clamped "ctrl"
+                </p>
+                    To zoom, use the mouse wheel while holding the button "ctrl"
+                </p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
